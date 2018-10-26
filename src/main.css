@@ -1,0 +1,80 @@
+
+p {
+  text-align: center;
+}
+
+input {
+  padding: 0px;
+  margin: 0px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.primary, .secondary {
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.temperature-wrapper {
+  text-align: center;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wi {
+  font-size: 7em;
+  line-height: 1.15;
+}
+
+.icon {
+  padding: 30px;
+  color: white;
+}
+
+.card {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 0;
+  margin: 30px auto;
+  border-radius: 3px;
+  box-sizing: content-box;
+}
+
+.key span {
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.info {
+  width: 100%;
+}
+
+.cool {
+  background: #BAE8E7;
+}
+
+.mid {
+  background: #FCCA55;
+}
+
+.hot {
+  background: #FF3D5A;
+}
+
+.error {
+  color: red;
+}
+
+@media (max-width: 1024px) {
+  .wi {
+    font-size: 5em;
+  }
+}

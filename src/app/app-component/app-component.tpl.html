@@ -1,0 +1,80 @@
+<div class="app">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Weather Forecast App</a>
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active" ng-click="$ctrl.setDisplayFormat(true)">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> &deg;C
+                </label>
+                <label class="btn btn-success" ng-click="$ctrl.setDisplayFormat(false)">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> &deg;F
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <div ui-view class="d-flex justify-content-center align-items-center flex-column">
+        <div class="col-12 col-xl-6">
+            <form class="w-100 d-flex" ng-submit="$ctrl.refresh()">
+                <input class="w-100 my-5" type="text" ng-model="$ctrl.location" placeholder="Location Here" />
+            </form>
+        </div>
+        <h2 class="error" ng-show="$ctrl.isError && !$ctrl.isLoading">
+            Please try to search correct location!
+        </h2>
+        <div ng-if="$ctrl.isLoading" class="w-75">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <div ng-if="!$ctrl.isLoading && !$ctrl.isError" class="temperature-wrapper">
+            <h1>Today's temperature in
+                <span class="text-success">{{$ctrl.weatherData.city.name}}, {{$ctrl.weatherData.city.country}}</span> is
+                <span class="text-primary" ng-if="$ctrl.isCelsius">{{$ctrl.weatherData.list[0].temp.day - 273| number:0}}&deg;C</span>
+                <span class="text-primary" ng-if="!$ctrl.isCelsius">{{$ctrl.weatherData.list[0].temp.day | number:0}}&deg;F</span>
+            </h1>
+        </div>
+        
+        <div ng-if="!$ctrl.isLoading && !$ctrl.isError" class="row w-100 px-xl-5">
+            <div ng-repeat="data in $ctrl.weatherData.list" class="card col-8 col-md-3 col-lg-2" ng-class="{hot: data.temp.day - 273 >= 23, mid: data.temp.day - 273 > 15, cool: data.temp.day - 273 < 15 }">
+                <p>{{data.dt*1000 | date:'yyyy-MM-dd'}}</p>
+                <div class="icon">
+                    <!-- Day -->
+                    <i ng-if="data.weather[0].id == 800" class="wi wi-day-sunny"></i>
+
+                    <!-- Cloudy -->
+                    <i ng-if="data.weather[0].id >= 801 && data.weather[0].id <= 804 && data.clouds < 50" class="wi wi-day-cloudy"></i>
+                    <i ng-if="data.weather[0].id >= 801 && data.weather[0].id <= 804 && data.clouds >= 50" class="wi wi-cloudy"></i>
+
+                    <!-- Drizzle -->
+                    <i ng-if="data.weather[0].id >= 300 && data.weather[0].id <= 321 && data.clouds < 50" class="wi wi-day-rain-mix"></i>
+                    <i ng-if="data.weather[0].id >= 300 && data.weather[0].id <= 321 && data.clouds >= 50" class="wi wi-rain-mix"></i>
+
+                    <!-- Rain -->
+                    <i ng-if="data.weather[0].id >= 500 && data.weather[0].id <= 531 && data.clouds < 50" class="wi wi-day-rain"></i>
+                    <i ng-if="data.weather[0].id >= 500 && data.weather[0].id <= 531 && data.clouds >= 50" class="wi wi-rain"></i>
+
+                    <!-- Snow -->
+                    <i ng-if="data.weather[0].id >= 600 && data.weather[0].id <= 622 && data.clouds < 50" class="wi wi-day-snow"></i>
+                    <i ng-if="data.weather[0].id >= 600 && data.weather[0].id <= 622 && data.clouds >= 50" class="wi wi-snow"></i>
+
+                    <!-- Thunder Storms -->
+                    <i ng-if="data.weather[0].id >= 200 && data.weather[0].id <= 232 && data.clouds < 50" class="wi wi-day-thunderstorm"></i>
+                    <i ng-if="data.weather[0].id >= 200 && data.weather[0].id <= 232 && data.clouds >= 50" class="wi wi-thunderstorm"></i>
+
+                    <!-- Mist and Fog -->
+                    <i ng-if="data.weather[0].id >= 701 && data.weather[0].id <= 781" class="wi wi-fog"></i>
+                </div>
+                <h3 ng-if="$ctrl.isCelsius">{{data.temp.day - 273 | number:0}}&deg;C</h3>
+                <h3 ng-if="!$ctrl.isCelsius">{{data.temp.day | number:0}}&deg;F</h3>
+                <p class="info">
+                    {{data.weather[0].main}}: {{data.weather[0].description}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
