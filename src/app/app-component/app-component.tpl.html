@@ -35,7 +35,7 @@
             <h1>Today's temperature in
                 <span class="text-success">{{$ctrl.weatherData.city.name}}, {{$ctrl.weatherData.city.country}}</span> is
                 <span class="text-primary" ng-if="$ctrl.isCelsius">{{$ctrl.weatherData.list[0].temp.day - 273| number:0}}&deg;C</span>
-                <span class="text-primary" ng-if="!$ctrl.isCelsius">{{$ctrl.weatherData.list[0].temp.day | number:0}}&deg;F</span>
+                <span class="text-primary" ng-if="!$ctrl.isCelsius">{{($ctrl.weatherData.list[0].temp.day - 273) * 9 / 5.0 + 32 | number:0}}&deg;F</span>
             </h1>
         </div>
         
@@ -70,7 +70,7 @@
                     <i ng-if="data.weather[0].id >= 701 && data.weather[0].id <= 781" class="wi wi-fog"></i>
                 </div>
                 <h3 ng-if="$ctrl.isCelsius">{{data.temp.day - 273 | number:0}}&deg;C</h3>
-                <h3 ng-if="!$ctrl.isCelsius">{{data.temp.day | number:0}}&deg;F</h3>
+                <h3 ng-if="!$ctrl.isCelsius">{{(data.temp.day - 273) * 9 / 5.0 + 32 | number:0}}&deg;F</h3>
                 <p class="info">
                     {{data.weather[0].main}}: {{data.weather[0].description}}
                 </p>
